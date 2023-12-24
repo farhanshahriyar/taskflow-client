@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FaCalendar, FaSearch } from "react-icons/fa";
+import { FaCalendar, FaClock, FaSearch } from "react-icons/fa";
 import { GoProjectSymlink } from "react-icons/go";
 import { LuListTodo } from "react-icons/lu";
 import { Outlet } from "react-router-dom";
@@ -48,15 +48,15 @@ const Dashboard = () => {
             {/* Dashboard item */}
             <a
               aria-disabled
-              href="#dashboard"
+              href="/"
               className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"
             >
               {/* Icon */}
-              <span>Taskflow Dashboard</span>
+              <span>Taskflow</span>
             </a>
             <a
               aria-disabled
-              href="#dashboard"
+              href="/dashboard"
               className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"
             >
               {/* Icon */}
@@ -91,14 +91,7 @@ const Dashboard = () => {
               <span>💬</span>
               <span>Messages</span>
             </a>
-            <a
-              href="/dashboard/messages"
-              className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"
-            >
-              {/* Icon */}
-              <span>💬</span>
-              <span>Messages</span>
-            </a>
+
             {/* Other nav items */}
           </nav>
           <div className="px-4 py-4">
@@ -129,11 +122,17 @@ const Dashboard = () => {
           </div>
           <div className="flex space-x-4">
             <FaCalendar className="w-5 h-5 text-gray-500" />
-            <span>Today is</span>
-            <p className="border-l border-gray-300 pl-4">
-              Time will show here here
-            </p>
+            {/* date will show here */}
+            <span>Day : {new Date().toLocaleDateString()}</span>
           </div>
+          <div className="border-l border-gray-300 h-6"></div>
+          <div className="flex space-x-4">
+          <FaClock className="w-5 h-5 text-gray-500" /> 
+            {/* date will show here */}
+            <span> Time :{" "}
+              {new Date().toLocaleTimeString()} - Bangladeshi Time</span>
+          </div>
+       
           {/* Profile dropdown */}
           <div className="flex items-center space-x-2">
             {/* <FaUserCircle className="w-8 h-8 text-gray-500" /> */}
