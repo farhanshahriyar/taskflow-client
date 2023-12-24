@@ -150,7 +150,7 @@ const Header = () => {
                       Profile settings
                     </a>
                     <a
-                      href="/dashboard"
+                      href="/dashboard/projects"
                       className="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-800 hover:text-white"
                     >
                       Dashboard

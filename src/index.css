@@ -21,3 +21,13 @@
   scroll-behavior: smooth;
   font-family: 'Inter', sans-serif;
 }
+
+
+
+  @keyframes rotate {
+    100% { transform: translateX(-50%) rotate(360deg)}
+  }
+  @keyframes move {
+    0% { transform: rotate(10deg)}
+    100% { transform: rotate(-10deg)}
+  }
