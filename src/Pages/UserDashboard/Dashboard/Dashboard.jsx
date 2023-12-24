@@ -1,8 +1,5 @@
 import React, { useContext } from "react";
-import {
-  FaCalendar,
-  FaSearch
-} from "react-icons/fa";
+import { FaCalendar, FaSearch } from "react-icons/fa";
 import { GoProjectSymlink } from "react-icons/go";
 import { LuListTodo } from "react-icons/lu";
 import { Outlet } from "react-router-dom";
@@ -15,40 +12,31 @@ const Dashboard = () => {
   // console.log(logout)
   console.log(user);
 
-  // Logout confirmation and functionalities here
-  const handleLogoutConfirmation = () => {
+  // Logout
+  const handleLogout = () => {
     Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
       icon: "warning",
-      title: "Are you sure you want to logout?",
       showCancelButton: true,
-      confirmButtonText: "Yes, logout!",
+      confirmButtonText: "Yes, log me out!",
       cancelButtonText: "No, cancel!",
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        handleLogout();
+        logOut().then(() => {
+          Swal.fire({
+            title: "Logged out!",
+            text: "You have been logged out.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        });
       }
     });
-  };
-
-  const handleLogout = () => {
-    logOut()
-      .then(() => {
-        Swal.fire(
-          "Logged Out!",
-          "You have been logged out successfully.",
-          "success"
-        );
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-        Swal.fire(
-          "Oops!",
-          "Something went wrong with the logout process.",
-          "error"
-        );
-      });
   };
 
   return (
