@@ -1,108 +1,64 @@
-import React, { useContext, useState } from "react";
-import axios from "axios";
-import { AuthContext } from "../../../providers/AuthProvider";
-import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // import css
-import Swal from "sweetalert2";
-import uploadImgToImgBB from "../../../utils/imgbbUpload";
-import { MdCancel } from "react-icons/md";
+import React, { useState, useContext } from 'react';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from '../../../providers/AuthProvider';
+import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import Swal from 'sweetalert2';
 
-const Tasks = () => {
+const UpdateTask = () => {
+  const taskData = useLoaderData();
   const { user } = useContext(AuthContext);
-  const [postingDate, setPostingDate] = useState(new Date());
-  const [dates, setDates] = useState(new Date());
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [postingDate, setPostingDate] = useState(new Date()); 
 
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result); 
-        setImageFile(file); 
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleTaskInfo = async (e) => {
+  const handleUpdateTaskSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     
-    // Initialize the task data without the imageUrl
-    const finalTaskData = {
+    const updatedTask = {
       positiontitle: form.positiontitle.value,
-      useremail: form.useremail.value,
       recemail: form.recemail.value,
       cname: form.cname.value,
       cabout: form.cabout.value,
       salary: form.salary.value,
+      imageUrl: form.imageUrl.value,
       streetaddress: form.streetaddress.value,
       region: form.region.value,
       postalcode: form.postalcode.value,
       titletask: form.titletask.value,
       taskpriority: form.taskpriority.value,
       taskdescription: form.taskdescription.value,
-      status: "notStarted",
-      date: form.date.value,
-      postingDate: postingDate,
+      date: postingDate.toISOString(), // Ensure correct date format
     };
-  
-    if (imageFile) {
-      try {
-        const imageUrl = await uploadImgToImgBB(imageFile);
-        if (imageUrl) {
-          finalTaskData.imageUrl = imageUrl; // Add imageUrl to task data
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to upload the image. Please try again.",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-        return; // Early return if image upload fails
-      }
-    }
-  
-    // Submit the task data to the server
+
     try {
-      const response = await axios.post("http://localhost:5000/tasks", finalTaskData);
-      console.log(response);
-      Swal.fire({
-        title: "Success!",
-        text: "Task added successfully!",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
+      const response = await axios.put(`http://localhost:5000/tasks/${id}`, updatedTask);
+      if (response.data.modifiedCount > 0) {
+        Swal.fire('Success!', 'Task updated successfully', 'success');
+        navigate('/dashboard/projects');
+      } else {
+        Swal.fire('Error!', 'No changes were made or something went wrong.', 'error');
+      }
     } catch (error) {
-      console.error("Error adding task:", error);
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to add the task. Please try again.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
+      console.error('Failed to update Task', error);
+      Swal.fire('Error!', 'An error occurred while updating the Task.', 'error');
     }
-  
-    // Reset the form and clear the image preview
-    e.target.reset();
-    setImageFile(null);
-    setImagePreview(null);
   };
-  
 
-
+ 
+    
   return (
     <div>
-      <form onSubmit={handleTaskInfo}>
+      <p className="text-base font-semibold leading-7 text-gray-900">
+        Task ID is {id}
+      </p>
+      <form onSubmit={handleUpdateTaskSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-xl font-semibold leading-7 text-gray-900">
-              Add Task
+              Update Task
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               This information will be displayed All Job page. Not in Dashboard.
@@ -147,7 +103,8 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     id="positiontitle"
-                    name="positiontitle"
+                    defaultValue={taskData.titletask}
+                    // name="positiontitle"
                     type="positiontitle"
                     autoComplete="positiontitle"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -165,7 +122,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     id="recemail"
-                    name="recemail"
+                    defaultValue={taskData.recemail}
                     type="recemail"
                     autoComplete="recemail"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -183,6 +140,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     id="cname"
+                    defaultValue={taskData.cname}
                     name="cname"
                     type="cname"
                     autoComplete="cname"
@@ -201,7 +159,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <textarea
                     id="cabout"
-                    name="cabout"
+                    defaultValue={taskData.cabout}
                     rows="3"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   ></textarea>
@@ -221,7 +179,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="salary"
+                    defaultValue={taskData.salary}
                     id="salary"
                     autoComplete="address-level2"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -231,64 +189,19 @@ const Tasks = () => {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="cover-photo"
+                  htmlFor="street-address"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Image Upload (Optional)
+                  Uploaded Image
                 </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                  <div className="text-center">
-                    <svg
-                      className="mx-auto h-12 w-12 text-gray-300"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                      <label
-                        htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-green-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 hover:text-green-500"
-                      >
-                        <span>Upload a file</span>
-                        <input
-                          onChange={handleImageChange}
-                          id="file-upload"
-                          name="fileupload"
-                          type="file"
-                          className="sr-only"
-                        />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
-                    </div>
-                    <p className="text-xs leading-5 text-gray-600">
-                      PNG, JPG, Gif up to 10MB
-                    </p>
-                    {imagePreview && (
-                      <div>
-                        <p className="text-xs leading-5 text-gray-600">
-                          You have uploaded:
-                        </p>
-                        <MdCancel
-                          onClick={() => {
-                            setImageFile(null);
-                            setImagePreview(null);
-                          }}
-                          className="cursor-pointer text-red-500 hover:text-red-600"
-                        />
-                        <img
-                          src={imagePreview}
-                          alt="Uploaded"
-                          style={{ width: "100px", height: "100px" }}
-                        />
-                      </div>
-                    )}
-                  </div>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    defaultValue={taskData.imageUrl}
+                    id="street-address"
+                    autoComplete="street-address"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
                 </div>
               </div>
 
@@ -302,7 +215,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="streetaddress"
+                    defaultValue={taskData.streetaddress}
                     id="street-address"
                     autoComplete="street-address"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -320,7 +233,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="region"
+                    defaultValue={taskData.region}
                     id="region"
                     autoComplete="address-level1"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -338,7 +251,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="postalcode"
+                    defaultValue={taskData.postalcode}
                     id="postal-code"
                     autoComplete="postal-code"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -358,42 +271,7 @@ const Tasks = () => {
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              {/* <div className="sm:col-span-3">
-                <label
-                  for="first-name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  First name
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    autoComplete="given-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  for="last-name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Last name
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    autoComplete="family-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div> */}
-
+            
               <div className="sm:col-span-4">
                 <label
                   htmlFor="title-task"
@@ -404,7 +282,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     id="title-task"
-                    name="titletask"
+                    defaultValue={taskData.titletask}
                     type="title-task"
                     autoComplete="title-task"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -422,7 +300,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <select
                     id="task-priority"
-                    name="taskpriority"
+                    defaultValue={taskData.taskpriority}
                     autoComplete="taskpriority"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
@@ -443,7 +321,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <textarea
                     id="task-description"
-                    name="taskdescription"
+                    defaultValue={taskData.taskdescription}
                     rows="3"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   ></textarea>
@@ -458,7 +336,7 @@ const Tasks = () => {
                   Task Deadline
                 </label>
                 <ReactDatePicker
-                  name="date"
+                  defaultValue={taskData.date}
                   selected={postingDate}
                   onChange={(date) => setPostingDate(date)}
                   className="py-2 px-3 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
@@ -479,7 +357,7 @@ const Tasks = () => {
             type="submit"
             className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
           >
-            Save
+            Update task
           </button>
         </div>
       </form>
@@ -487,4 +365,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default UpdateTask;

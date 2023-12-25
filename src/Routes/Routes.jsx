@@ -12,6 +12,7 @@ import Projects from "../Pages/UserDashboard/Projects/Projects";
 import Tasks from "../Pages/UserDashboard/Tasks/Tasks";
 import Message from "../Pages/UserDashboard/Message/Message";
 import Jobs from "../Pages/UserDashboard/Jobs/Jobs";
+import UpdateTask from "../Pages/UserDashboard/UpdateTask/UpdateTask";
 
 export const router = createBrowserRouter([
   {
@@ -35,10 +36,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: 
-    <ProtectedRoute>
-      <Dashboard />
-    </ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       // {
       //   path: "/dashboard",
@@ -68,7 +70,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/tasks",
         element: (
           <ProtectedRoute>
-            <Tasks/>
+            <Tasks />
           </ProtectedRoute>
         ),
       },
@@ -76,7 +78,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/message",
         element: (
           <ProtectedRoute>
-            <Message/>
+            <Message />
           </ProtectedRoute>
         ),
       },
@@ -84,9 +86,21 @@ export const router = createBrowserRouter([
         path: "/dashboard/jobs",
         element: (
           <ProtectedRoute>
-            <Jobs/>
+            <Jobs />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/dashboard/update-task/:id",
+        element: (
+          <ProtectedRoute>
+            <UpdateTask />
+          </ProtectedRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/tasks/${params.id}`).then(
+            (res) => res.json()
+          ),
       },
     ],
   },
