@@ -1,9 +1,8 @@
 import React from "react";
 import Swal from "sweetalert2";
 
-const CompletedCard = ({ task }) => {
-  const { _id, cname, status, titletask, taskdescription, date, postingDate } =
-    task;
+const CompletedCard = ({ task, setRefetech }) => {
+    const { _id, cname, status, titletask, taskdescription, date, postingDate } = task;
 
   const handleCompletedDeleteTask = (id) => {
     Swal.fire({
@@ -25,7 +24,7 @@ const CompletedCard = ({ task }) => {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            Swal.fire("Deleted!", "Your task has been deleted.", "success");
             // Remove the task from the state to update the UI
             setTasks((prevTasks) =>
               prevTasks.filter((task) => task._id !== id)

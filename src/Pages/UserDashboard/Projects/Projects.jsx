@@ -90,7 +90,6 @@ const Projects = () => {
             {/* Map through completed tasks and render them */}
             {
               completedTasks.map((task) => (
-                // <CompletedCard key={task._id} {...task} setRefetech={setRefetech} />
                 <CompletedCard key={task._id} task={task} setRefetech={setRefetech} />
               ))
             }
