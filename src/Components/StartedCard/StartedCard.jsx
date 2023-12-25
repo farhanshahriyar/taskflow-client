@@ -1,6 +1,6 @@
 import React from "react";
 
-const StartedCard = ({ taskpriority, titletask, taskdescription, date }) => {
+const StartedCard = ({ _id, taskpriority, titletask, taskdescription, date, setRefetech }) => {
   // Function to get the color based on the task priority
   const getPriorityColor = (priority) => {
     const colors = {
@@ -11,9 +11,27 @@ const StartedCard = ({ taskpriority, titletask, taskdescription, date }) => {
     return colors[priority.toLowerCase()] || "bg-gray-500"; // Default color if none is matched
   };
 
+  const handleStartTask = (id) => {
+    fetch(`http://localhost:5000/tasks/${id}/start`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: 'inProgress' }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      setRefetech(prev => !prev);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  };
+
   return (
-    <div>
-      <article className="rounded-xl bg-white p-4 ring ring-green-50 sm:p-6 lg:p-8">
+    <div className="mt-5">
+      <article className="rounded-xl bg-white p-4 ring ring-green-50 sm:p-6 lg:p-8 shadow-2xl">
         <div className="flex items-start sm:gap-8">
           <div
             className="hidden sm:grid sm:h-20 sm:w-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-green-500"
@@ -29,9 +47,12 @@ const StartedCard = ({ taskpriority, titletask, taskdescription, date }) => {
           </div>
 
           <div>
-            {/* if taskpriority is high than the bg color will be "bg-red-500" , if moderate bg color will be "bg-orange-500", if low bg color will be "bg-teal-600" */}
-            <strong className={`rounded border px-3 py-1.5 text-[10px] font-medium text-white ${getPriorityColor(taskpriority)}`}>
-              {taskpriority}
+            <strong
+              className={`rounded border px-3 py-1.5 text-[10px] font-medium text-white ${getPriorityColor(
+                taskpriority
+              )}`}
+            >
+              Task Priority : {taskpriority}
             </strong>
 
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
@@ -71,6 +92,12 @@ const StartedCard = ({ taskpriority, titletask, taskdescription, date }) => {
                 Task Datelines{" "}
               </p>
             </div>
+              <div className="flex justify-end mt-2">
+                <button onClick={() => handleStartTask(_id)}
+                 className="group relative inline-block overflow-hidden bg-red-500 hover:bg-orange-600 border px-8 py-3 focus:outline-none focus:ring cursor-pointer">
+                  <span className="text-xs font-medium text-white">Start Task</span>
+                </button>
+              </div>
           </div>
         </div>
       </article>

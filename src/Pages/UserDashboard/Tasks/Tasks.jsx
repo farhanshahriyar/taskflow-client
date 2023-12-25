@@ -66,6 +66,7 @@ const Tasks = () => {
           titletask: form.titletask.value,
           taskpriority: form.taskpriority.value,
           taskdescription: form.taskdescription.value,
+          status: "notStarted",
           date: form.date.value,
           postingDate: dates,
         };
