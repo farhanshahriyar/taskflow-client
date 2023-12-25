@@ -12,9 +12,35 @@ const Tasks = () => {
   const [postingDate, setPostingDate] = useState(new Date());
   const [dates, setDates] = useState(new Date());
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); 
 
   // const handleImageChange = (e) => {
   //   setImageFile(e.target.files[0]);
+  // };
+
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImageFile(reader.result); // It will be the data URL of the image
+  //       setImageFile(file);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //    // first the file will be data url of the image and then the file itself will be set to the state variable imageFile
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImageFile(reader.result); // It will be the data URL of the image
+  //       setImageFile(file);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
   // };
 
   const handleImageChange = (e) => {
@@ -22,8 +48,8 @@ const Tasks = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageFile(reader.result); // It will be the data URL of the image
-        setImageFile(file);
+        setImagePreview(reader.result); // Set the data URL to imagePreview for displaying the image
+        setImageFile(file); // Set the file object to imageFile for uploading
       };
       reader.readAsDataURL(file);
     }
@@ -250,13 +276,20 @@ const Tasks = () => {
                     <p className="text-xs leading-5 text-gray-600">
                       PNG, JPG, Gif up to 10MB
                     </p>
-                    {imageFile && (
+                    {imagePreview && (
                       <div>
-                        <p className="text-xs leading-5 text-gray-600"> You have uploaded </p>
-                        {/* here will be a cross icon, if user use this icon the uploaded items will be deleted */}
-                        <MdCancel onClick={() => setImageFile(null)} className="cursor-pointer text-red-500 hover:text-red-600" />
+                        <p className="text-xs leading-5 text-gray-600">
+                          You have uploaded:
+                        </p>
+                        <MdCancel
+                          onClick={() => {
+                            setImageFile(null);
+                            setImagePreview(null);
+                          }}
+                          className="cursor-pointer text-red-500 hover:text-red-600"
+                        />
                         <img
-                          src={imageFile}
+                          src={imagePreview}
                           alt="Uploaded"
                           style={{ width: "100px", height: "100px" }}
                         />
