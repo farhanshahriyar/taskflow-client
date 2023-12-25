@@ -10,10 +10,10 @@ const fullPageStyle = {
   
   const spinnerStyle = {
     border: '6px solid #f3f3f3', // Light grey
-    borderTop: '6px solid #3498db', // Blue color
+    borderTop: '6px solid #34db42', // Green color
     borderRadius: '50%',
-    width: '50px',
-    height: '50px',
+    width: '100px',
+    height: '100px',
     animation: 'spin 1s linear infinite',
   };
   

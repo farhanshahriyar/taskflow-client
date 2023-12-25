@@ -66,7 +66,7 @@ const Banner = () => {
               className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-green-600 to-green-600 hover:from-green-600 hover:to-green-600 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-4 dark:focus:ring-offset-gray-800"
               href="/login"
             >
-              Get Started with TaskFlow
+              Let's Explore with TaskFlow
             </a>
           </div>
         </div>
