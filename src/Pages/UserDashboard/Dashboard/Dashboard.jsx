@@ -110,6 +110,12 @@ const Dashboard = () => {
             {/* Other nav items */}
           </nav>
           <div className="px-4 py-4">
+            <a href="/user-profile" className="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700 cursor-pointer">
+              {/* Icon */}
+              <span>👤</span>
+              <span>Profile Settings</span>
+            </a>
+
             {/* Logout */}
             <a
               onClick={handleLogout}

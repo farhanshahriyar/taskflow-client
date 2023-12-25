@@ -12,7 +12,6 @@ const Update = () => {
   const { user } = useContext(AuthContext);
   const [postingDate, setPostingDate] = useState(new Date());
 
-  // Assuming you have a dueDate similar to postingDate in your tasks
   const initialDate = updateTask.dueDate
     ? new Date(updateTask.dueDate)
     : new Date();
