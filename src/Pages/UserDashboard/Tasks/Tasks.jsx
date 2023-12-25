@@ -6,7 +6,6 @@ import "react-datepicker/dist/react-datepicker.css"; // import css
 import Swal from "sweetalert2";
 import uploadImgToImgBB from "../../../utils/imgbbUpload";
 import { MdCancel } from "react-icons/md";
-import useAxiosPublic from "../../../hooks/useAxiosPublic/useAxiosPublic";
 
 const Tasks = () => {
   const { user } = useContext(AuthContext);
@@ -15,42 +14,14 @@ const Tasks = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  // const handleImageChange = (e) => {
-  //   setImageFile(e.target.files[0]);
-  // };
-
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImageFile(reader.result); // It will be the data URL of the image
-  //       setImageFile(file);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //    // first the file will be data url of the image and then the file itself will be set to the state variable imageFile
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImageFile(reader.result); // It will be the data URL of the image
-  //       setImageFile(file);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result); // Set the data URL to imagePreview for displaying the image
-        setImageFile(file); // Set the file object to imageFile for uploading
+        setImagePreview(reader.result); 
+        setImageFile(file); 
       };
       reader.readAsDataURL(file);
     }
@@ -134,6 +105,9 @@ const Tasks = () => {
     }
     // form reset
     e.target.reset();
+    // image preview reset
+    setImageFile(null);
+    setImagePreview(null);
   };
 
   return (
