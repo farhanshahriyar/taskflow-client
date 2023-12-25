@@ -29,87 +29,71 @@ const Tasks = () => {
 
   const handleTaskInfo = async (e) => {
     e.preventDefault();
-
-    // Log the form data for debugging
     const form = e.target;
-    console.log(form.useremail.value);
-    console.log(form.recemail.value);
-    console.log(form.cname.value);
-    console.log(form.cabout.value);
-    console.log(form.salary.value);
-    console.log(form.streetaddress.value);
-    console.log(form.region.value);
-    console.log(form.postalcode.value);
-    console.log(form.titletask.value);
-    console.log(form.taskpriority.value);
-    console.log(form.taskdescription.value);
-    console.log(form.date.value);
-    console.log(dates);
-    console.log(imageFile);
-
+    
+    // Initialize the task data without the imageUrl
+    const finalTaskData = {
+      useremail: form.useremail.value,
+      recemail: form.recemail.value,
+      cname: form.cname.value,
+      cabout: form.cabout.value,
+      salary: form.salary.value,
+      streetaddress: form.streetaddress.value,
+      region: form.region.value,
+      postalcode: form.postalcode.value,
+      titletask: form.titletask.value,
+      taskpriority: form.taskpriority.value,
+      taskdescription: form.taskdescription.value,
+      status: "notStarted",
+      date: form.date.value,
+      postingDate: postingDate,
+    };
+  
     if (imageFile) {
       try {
         const imageUrl = await uploadImgToImgBB(imageFile);
-        // Make sure imageUrl is not undefined
-        console.log(imageUrl);
-
-        const finalTaskData = {
-          imageUrl,
-          useremail: form.useremail.value,
-          recemail: form.recemail.value,
-          cname: form.cname.value,
-          cabout: form.cabout.value,
-          salary: form.salary.value,
-          streetaddress: form.streetaddress.value,
-          region: form.region.value,
-          postalcode: form.postalcode.value,
-          titletask: form.titletask.value,
-          taskpriority: form.taskpriority.value,
-          taskdescription: form.taskdescription.value,
-          status: "notStarted",
-          date: form.date.value,
-          postingDate: dates,
-        };
-        console.log(finalTaskData);
-
-        // Send the data to the server
-        // axios post request
-        axios.post("http://localhost:5000/tasks", finalTaskData)
-          .then((response) => {
-            console.log(response);
-            Swal.fire({
-              title: "Success!",
-              text:
-                "Task Added Successfully sent!",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-            Swal.fire({
-              title: "Error!",
-              text: "Something went wrong!",
-              icon: "error",
-              confirmButtonText: "Ok",
-            });
-          });
+        if (imageUrl) {
+          finalTaskData.imageUrl = imageUrl; // Add imageUrl to task data
+        }
       } catch (error) {
         console.error("Error uploading image:", error);
         Swal.fire({
           title: "Error!",
-          text: "Something went wrong!",
+          text: "Failed to upload the image. Please try again.",
           icon: "error",
           confirmButtonText: "Ok",
         });
+        return; // Early return if image upload fails
       }
     }
-    // form reset
+  
+    // Submit the task data to the server
+    try {
+      const response = await axios.post("http://localhost:5000/tasks", finalTaskData);
+      console.log(response);
+      Swal.fire({
+        title: "Success!",
+        text: "Task added successfully!",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } catch (error) {
+      console.error("Error adding task:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to add the task. Please try again.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  
+    // Reset the form and clear the image preview
     e.target.reset();
-    // image preview reset
     setImageFile(null);
     setImagePreview(null);
   };
+  
+
 
   return (
     <div>
