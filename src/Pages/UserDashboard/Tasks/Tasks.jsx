@@ -1,16 +1,86 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 import { AuthContext } from "../../../providers/AuthProvider";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // import css
+import Swal from "sweetalert2";
+import uploadImgToImgBB from "../../../utils/imgbbUpload";
+import { MdCancel } from "react-icons/md";
 
 const Tasks = () => {
   const { user } = useContext(AuthContext);
   const [postingDate, setPostingDate] = useState(new Date());
   const [dates, setDates] = useState(new Date());
+  const [imageFile, setImageFile] = useState(null);
+
+  // const handleImageChange = (e) => {
+  //   setImageFile(e.target.files[0]);
+  // };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageFile(reader.result); // It will be the data URL of the image
+        setImageFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleTaskInfo = async (e) => {
+    e.preventDefault();
+
+    // Log the form data for debugging
+    const form = e.target;
+    console.log(form.useremail.value);
+    console.log(form.recemail.value);
+    console.log(form.cname.value);
+    console.log(form.cabout.value);
+    console.log(form.salary.value);
+    console.log(form.streetaddress.value);
+    console.log(form.region.value);
+    console.log(form.postalcode.value);
+    console.log(form.titletask.value);
+    console.log(form.taskpriority.value);
+    console.log(form.taskdescription.value);
+    console.log(form.date.value);
+    console.log(dates);
+    console.log(imageFile);
+
+    if (imageFile) {
+      try {
+        const imageUrl = await uploadImgToImgBB(imageFile);
+        // Make sure imageUrl is not undefined
+        console.log(imageUrl);
+
+        const finalTaskData = {
+          imageUrl,
+          useremail: form.useremail.value,
+          recemail: form.recemail.value,
+          cname: form.cname.value,
+          cabout: form.cabout.value,
+          salary: form.salary.value,
+          streetaddress: form.streetaddress.value,
+          region: form.region.value,
+          postalcode: form.postalcode.value,
+          titletask: form.titletask.value,
+          taskpriority: form.taskpriority.value,
+          taskdescription: form.taskdescription.value,
+          date: form.date.value,
+          postingDate: dates,
+        };
+        console.log(finalTaskData);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+  };
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleTaskInfo}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-xl font-semibold leading-7 text-gray-900">
@@ -29,7 +99,7 @@ const Tasks = () => {
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Username
+                  Useremail
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
@@ -37,12 +107,12 @@ const Tasks = () => {
                       Logged in as
                     </span>
                     <input
+                      readOnly
                       type="text"
-                      name="username"
-                      id="username"
-                      autoComplete="username"
+                      name="useremail"
+                      id="useremail"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder={user?.displayName}
+                      value={user?.email || ""} // if user is not logged in, then email is empty string
                     />
                   </div>
                 </div>
@@ -50,17 +120,17 @@ const Tasks = () => {
 
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="email"
+                  htmlFor="positiontitle"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Position Title
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="positiontitle"
+                    name="positiontitle"
+                    type="positiontitle"
+                    autoComplete="positiontitle"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -75,10 +145,10 @@ const Tasks = () => {
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="recemail"
+                    name="recemail"
+                    type="recemail"
+                    autoComplete="recemail"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -86,17 +156,17 @@ const Tasks = () => {
 
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="email"
+                  htmlFor="cname"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Company Name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="cname"
+                    name="cname"
+                    type="cname"
+                    autoComplete="cname"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -104,15 +174,15 @@ const Tasks = () => {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="about"
+                  htmlFor="cabout"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Company Description
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="about"
-                    name="about"
+                    id="cabout"
+                    name="cabout"
                     rows="3"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   ></textarea>
@@ -122,12 +192,30 @@ const Tasks = () => {
                 </p>
               </div>
 
+              <div className="sm:col-span-2 sm:col-start-1">
+                <label
+                  htmlFor="salary"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Salary Range
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="salary"
+                    id="salary"
+                    autoComplete="address-level2"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
               <div className="col-span-full">
                 <label
                   htmlFor="cover-photo"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  PDF Upload (Optional)
+                  Image Upload (Optional)
                 </label>
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
@@ -145,13 +233,14 @@ const Tasks = () => {
                     </svg>
                     <div className="mt-4 flex text-sm leading-6 text-gray-600">
                       <label
-                        for="file-upload"
+                        htmlFor="file-upload"
                         className="relative cursor-pointer rounded-md bg-white font-semibold text-green-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 hover:text-green-500"
                       >
                         <span>Upload a file</span>
                         <input
+                          onChange={handleImageChange}
                           id="file-upload"
-                          name="file-upload"
+                          name="fileupload"
                           type="file"
                           className="sr-only"
                         />
@@ -159,8 +248,20 @@ const Tasks = () => {
                       <p className="pl-1">or drag and drop</p>
                     </div>
                     <p className="text-xs leading-5 text-gray-600">
-                      PNG, JPG, PDF up to 10MB
+                      PNG, JPG, Gif up to 10MB
                     </p>
+                    {imageFile && (
+                      <div>
+                        <p className="text-xs leading-5 text-gray-600"> You have uploaded </p>
+                        {/* here will be a cross icon, if user use this icon the uploaded items will be deleted */}
+                        <MdCancel onClick={() => setImageFile(null)} className="cursor-pointer text-red-500 hover:text-red-600" />
+                        <img
+                          src={imageFile}
+                          alt="Uploaded"
+                          style={{ width: "100px", height: "100px" }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -175,27 +276,9 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="street-address"
+                    name="streetaddress"
                     id="street-address"
                     autoComplete="street-address"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Salary Range
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    autoComplete="address-level2"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -229,7 +312,7 @@ const Tasks = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="postal-code"
+                    name="postalcode"
                     id="postal-code"
                     autoComplete="postal-code"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
@@ -287,17 +370,17 @@ const Tasks = () => {
 
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="email"
+                  htmlFor="title-task"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Title of the Task
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="title-task"
+                    name="titletask"
+                    type="title-task"
+                    autoComplete="title-task"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -305,16 +388,16 @@ const Tasks = () => {
 
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="country"
+                  htmlFor="taskpriority"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Task Priority
                 </label>
                 <div className="mt-2">
                   <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
+                    id="task-priority"
+                    name="taskpriority"
+                    autoComplete="taskpriority"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option>Low</option>
@@ -326,15 +409,15 @@ const Tasks = () => {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="about"
+                  htmlFor="task-description"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Task Description
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="about"
-                    name="about"
+                    id="task-description"
+                    name="taskdescription"
                     rows="3"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   ></textarea>
