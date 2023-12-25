@@ -6,13 +6,14 @@ import "react-datepicker/dist/react-datepicker.css"; // import css
 import Swal from "sweetalert2";
 import uploadImgToImgBB from "../../../utils/imgbbUpload";
 import { MdCancel } from "react-icons/md";
+import useAxiosPublic from "../../../hooks/useAxiosPublic/useAxiosPublic";
 
 const Tasks = () => {
   const { user } = useContext(AuthContext);
   const [postingDate, setPostingDate] = useState(new Date());
   const [dates, setDates] = useState(new Date());
   const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null); 
+  const [imagePreview, setImagePreview] = useState(null);
 
   // const handleImageChange = (e) => {
   //   setImageFile(e.target.files[0]);
@@ -98,10 +99,41 @@ const Tasks = () => {
           postingDate: dates,
         };
         console.log(finalTaskData);
+
+        // Send the data to the server
+        // axios post request
+        axios.post("http://localhost:5000/tasks", finalTaskData)
+          .then((response) => {
+            console.log(response);
+            Swal.fire({
+              title: "Success!",
+              text:
+                "Task Added Successfully sent!",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong!",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
+          });
       } catch (error) {
         console.error("Error uploading image:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong!",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     }
+    // form reset
+    e.target.reset();
   };
 
   return (

@@ -1,16 +1,23 @@
 import React, { useContext } from "react";
-import { FaCalendar, FaClock, FaSearch } from "react-icons/fa";
+import { FaBriefcase, FaCalendar, FaClock, FaSearch } from "react-icons/fa";
 import { GoProjectSymlink } from "react-icons/go";
 import { LuListTodo } from "react-icons/lu";
 import { Outlet } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { CiLogout } from "react-icons/ci";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 
 const Dashboard = () => {
   const { user, logOut } = useContext(AuthContext);
+  const loading = false;
   // console.log(logout)
-  console.log(user);
+  // console.log(user);
+
+  // loading spinner
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   // Logout
   const handleLogout = () => {
@@ -84,7 +91,15 @@ const Dashboard = () => {
               <span>Tasks</span>
             </a>
             <a
-              href="/dashboard/messages"
+              href="/dashboard/jobs"
+              className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"
+            >
+              {/* Icon */}
+              <span><FaBriefcase/></span>
+              <span>Jobs</span>
+            </a>
+            <a
+              href="/dashboard/message"
               className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"
             >
               {/* Icon */}

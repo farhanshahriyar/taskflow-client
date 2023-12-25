@@ -10,6 +10,8 @@ import ProfileSettings from "../Pages/ProfileSettings/ProfileSettings";
 import ProtectedRoute from "./ProtectedRoutes";
 import Projects from "../Pages/UserDashboard/Projects/Projects";
 import Tasks from "../Pages/UserDashboard/Tasks/Tasks";
+import Message from "../Pages/UserDashboard/Message/Message";
+import Jobs from "../Pages/UserDashboard/Jobs/Jobs";
 
 export const router = createBrowserRouter([
   {
@@ -67,6 +69,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Tasks/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/message",
+        element: (
+          <ProtectedRoute>
+            <Message/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/jobs",
+        element: (
+          <ProtectedRoute>
+            <Jobs/>
           </ProtectedRoute>
         ),
       },
