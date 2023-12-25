@@ -13,6 +13,7 @@ import Tasks from "../Pages/UserDashboard/Tasks/Tasks";
 import Message from "../Pages/UserDashboard/Message/Message";
 import Jobs from "../Pages/UserDashboard/Jobs/Jobs";
 import UpdateTask from "../Pages/UserDashboard/UpdateTask/UpdateTask";
+import Update from "../Pages/UserDashboard/UpdateTask/Update";
 
 export const router = createBrowserRouter([
   {
@@ -90,11 +91,23 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      // {
+      //   path: "/dashboard/update-task/:id",
+      //   element: (
+      //     <ProtectedRoute>
+      //       <UpdateTask />
+      //     </ProtectedRoute>
+      //   ),
+      //   loader: ({ params }) =>
+      //     fetch(`http://localhost:5000/tasks/${params.id}`).then(
+      //       (res) => res.json()
+      //     ),
+      // },
       {
         path: "/dashboard/update-task/:id",
         element: (
           <ProtectedRoute>
-            <UpdateTask />
+            <Update/>
           </ProtectedRoute>
         ),
         loader: ({ params }) =>
