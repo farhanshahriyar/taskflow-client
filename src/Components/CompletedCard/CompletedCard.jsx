@@ -129,7 +129,7 @@ const CompletedCard = ({ task, setRefetech }) => {
               </div>
             </div>
             <div>
-              <p className="text-xs text-gray-500">Task Date: {date} </p>
+              <p className="text-xs text-green-500">Task Date: {date} </p>
             </div>
             <p className="hidden sm:block sm:text-xs sm:text-gray-500">
               Posted on{" "}

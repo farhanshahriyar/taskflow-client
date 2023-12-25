@@ -8,26 +8,25 @@ const InProgressCard = ({
   taskdescription,
   date,
   postingDate,
-  setRefetech
+  setRefetech,
 }) => {
-
-    const handleInProgressTask = (id) => {
-        fetch(`http://localhost:5000/tasks/${id}/complete`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ status: 'completed' }),
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            setRefetech(prev => !prev);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-        };
+  const handleInProgressTask = (id) => {
+    fetch(`http://localhost:5000/tasks/${id}/complete`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: "completed" }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setRefetech((prev) => !prev);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
     <div className="mt-5 rounded-xl shadow-xl bg-white">
@@ -63,23 +62,29 @@ const InProgressCard = ({
 
         <dl className="mt-6 flex gap-4 sm:gap-6">
           <div className="flex flex-col-reverse">
-            <dt className="text-xs font-medium text-gray-600">Task Published</dt>
+            <dt className="text-xs font-medium text-gray-600">
+              Task Published
+            </dt>
             <dd className="text-xs text-gray-500">{postingDate}</dd>
           </div>
 
           <div className="flex flex-col-reverse">
-            <dt className="text-xs font-medium text-gray-600">
+            <dt className="text-xs font-medium text-red-600">
               Task Priority: {taskpriority}
             </dt>
-            <dd className="text-xs text-gray-500">Task Deadline: {date}</dd>
+            <dd className="text-xs  text-red-700 font-bold">
+              Task Deadline: {date}
+            </dd>
           </div>
         </dl>
-          <div className="flex justify-end mt-2">
-            <button onClick={() => handleInProgressTask(_id)}
-             className="group relative inline-block overflow-hidden bg-orange-600  hover:bg-cyan-600 border px-8 py-3 focus:outline-none focus:ring cursor-pointer">
-              <span className="text-xs font-medium text-white">InProgress</span>
-            </button>
-          </div>
+        <div className="flex justify-end mt-2">
+          <button
+            onClick={() => handleInProgressTask(_id)}
+            className="group relative inline-block overflow-hidden bg-orange-600  hover:bg-cyan-600 border px-8 py-3 focus:outline-none focus:ring cursor-pointer"
+          >
+            <span className="text-xs font-medium text-white">InProgress</span>
+          </button>
+        </div>
       </a>
     </div>
   );
