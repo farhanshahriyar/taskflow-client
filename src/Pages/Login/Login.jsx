@@ -43,7 +43,7 @@ const Login = () => {
             text: "You are logged in successfully!",
           });
         });
-        navigate("/dashboard");
+        navigate("/dashboard/projects");
       })
       .catch((error) => {
         // Handle errors here
@@ -75,7 +75,7 @@ const Login = () => {
             text: "You are logged in successfully!",
           });
         });
-        navigate("/dashboard");
+        navigate("/dashboard/projects");
       })
       .catch((error) => {
         // Handle errors here
@@ -103,7 +103,7 @@ const Login = () => {
         title: "Login Successful",
         text: "You are logged in successfully!",
       });
-      navigate("/dashboard");
+      navigate("/dashboard/projects");
     });
   };
 

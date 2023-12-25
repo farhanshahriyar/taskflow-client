@@ -61,15 +61,15 @@ const Dashboard = () => {
               {/* Icon */}
               <span>Taskflow</span>
             </a>
-            <a
+            {/* <a
               aria-disabled
               href="/dashboard"
               className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"
             >
-              {/* Icon */}
+             
               <span>🏠</span>
               <span>Dashboard Home</span>
-            </a>
+            </a> */}
             <a
               href="/dashboard/projects"
               className="flex items-center space-x-2 px-4 py-3 rounded-md bg-gray-900"

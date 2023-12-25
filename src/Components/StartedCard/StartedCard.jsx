@@ -106,7 +106,7 @@ const StartedCard = ({
                 <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
                   <Link to={`/dashboard/update-task/${_id}`}
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
-                    title="Edit Task"
+                    title="Edit Task Under Progress"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
