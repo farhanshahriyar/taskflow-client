@@ -3,6 +3,7 @@ import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 import StartedCard from "../../../Components/StartedCard/StartedCard";
 import { AuthContext } from "../../../providers/AuthProvider";
 import InProgressCard from "../../../Components/InProgressCard/InProgressCard";
+import CompletedCard from "../../../Components/CompletedCard/CompletedCard";
 
 const Projects = () => {
   const [tasks, setTasks] = useState([]);
@@ -87,7 +88,11 @@ const Projects = () => {
           <div>
             <h2 className="text-lg font-bold mb-4 text-gray-700">Completed</h2>
             {/* Map through completed tasks and render them */}
-
+            {
+              completedTasks.map((task) => (
+                <CompletedCard key={task._id} {...task} setRefetech={setRefetech} />
+              ))
+            }
           </div>
         </div>
       </div>

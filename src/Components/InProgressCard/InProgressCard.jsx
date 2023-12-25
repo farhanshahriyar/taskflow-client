@@ -1,14 +1,34 @@
 import React from "react";
 
 const InProgressCard = ({
+  _id,
   cname,
   taskpriority,
   titletask,
   taskdescription,
   date,
   postingDate,
+  setRefetech
 }) => {
-    
+
+    const handleInProgressTask = (id) => {
+        fetch(`http://localhost:5000/tasks/${id}/complete`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: 'completed' }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            setRefetech(prev => !prev);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        };
+
   return (
     <div className="mt-5 rounded-xl shadow-xl bg-white">
       <a
@@ -55,7 +75,8 @@ const InProgressCard = ({
           </div>
         </dl>
           <div className="flex justify-end mt-2">
-            <button className="group relative inline-block overflow-hidden bg-orange-600  hover:bg-cyan-600 border px-8 py-3 focus:outline-none focus:ring cursor-pointer">
+            <button onClick={() => handleInProgressTask(_id)}
+             className="group relative inline-block overflow-hidden bg-orange-600  hover:bg-cyan-600 border px-8 py-3 focus:outline-none focus:ring cursor-pointer">
               <span className="text-xs font-medium text-white">InProgress</span>
             </button>
           </div>
