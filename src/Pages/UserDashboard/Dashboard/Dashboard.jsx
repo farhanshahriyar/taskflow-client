@@ -110,6 +110,11 @@ const Dashboard = () => {
             {/* Other nav items */}
           </nav>
           <div className="px-4 py-4">
+            <a href="/dashboard/software-update-news" className="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700 cursor-pointer">
+              {/* Icon */}
+              <span>📰</span>
+              <span>Update News</span>
+            </a>
             <a href="/user-profile" className="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700 cursor-pointer">
               {/* Icon */}
               <span>👤</span>

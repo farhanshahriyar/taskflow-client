@@ -14,6 +14,7 @@ import Message from "../Pages/UserDashboard/Message/Message";
 import Jobs from "../Pages/UserDashboard/Jobs/Jobs";
 import Update from "../Pages/UserDashboard/UpdateTask/Update";
 import UserProfile from "../Pages/UserDashboard/UserProfile/UserProfile";
+import TaskFlowUpdate from "../Pages/TaskFlowUpdate/TaskFlowUpdate";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Jobs />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/software-update-news",
+        element: (
+          <ProtectedRoute>
+            <TaskFlowUpdate/>
           </ProtectedRoute>
         ),
       },
