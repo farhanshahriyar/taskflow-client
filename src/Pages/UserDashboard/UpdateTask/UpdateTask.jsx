@@ -11,7 +11,11 @@ const UpdateTask = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [postingDate, setPostingDate] = useState(new Date()); 
+  // const [dates, setDates] = useState(new Date());
+  // const initialDate = taskData.postingDate ? new Date(taskData.postingDate) : new Date();
+  // const [postingDate, setPostingDate] = useState(initialDate);
+  const [postingDate, setPostingDate] = useState(new Date());
+  const [dates, setDates] = useState(new Date());
 
   const handleUpdateTaskSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +34,8 @@ const UpdateTask = () => {
       titletask: form.titletask.value,
       taskpriority: form.taskpriority.value,
       taskdescription: form.taskdescription.value,
-      date: postingDate.toISOString(), // Ensure correct date format
+      date: form.date.value,
+      postingDate: postingDate,
     };
 
     try {
@@ -337,6 +342,8 @@ const UpdateTask = () => {
                 </label>
                 <ReactDatePicker
                   defaultValue={taskData.date}
+                  // selected={postingDate}
+                  // onChange={(date) => setPostingDate(date)}
                   selected={postingDate}
                   onChange={(date) => setPostingDate(date)}
                   className="py-2 px-3 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"

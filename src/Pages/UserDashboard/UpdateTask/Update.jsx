@@ -12,10 +12,10 @@ const Update = () => {
   const { user } = useContext(AuthContext);
   const [postingDate, setPostingDate] = useState(new Date());
 
-  const initialDate = updateTask.dueDate
-    ? new Date(updateTask.dueDate)
+  const initialDate = updateTask.date
+    ? new Date(updateTask.date)
     : new Date();
-  const [dueDate, setDueDate] = useState(initialDate);
+  const [date, setDueDate] = useState(initialDate);
 
   // Function to call when the form is submitted
   const handleUpdateTask = async (event) => {
@@ -35,7 +35,8 @@ const Update = () => {
       titletask: formData.get("titletask"),
       taskpriority: formData.get("taskpriority"),
       taskdescription: formData.get("taskdescription"),
-      dueDate: dueDate.toISOString(),
+      date: formData.get("date"),
+      postingDate
     };
 
     try {
@@ -369,9 +370,9 @@ const Update = () => {
                   Task Deadline
                 </label>
                 <ReactDatePicker
-                  selected={dueDate}
+                  selected={date}
                   onChange={(date) => setDueDate(date)}
-                  name="dueDate" 
+                  name="date" 
                   className="py-2 px-3 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                 />
               </div>
