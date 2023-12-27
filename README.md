@@ -1,6 +1,6 @@
-## TaskMaster: User Authentication & Task Management Dashboard
+## Taskflow: User Authentication & Task Management Dashboard
 
-TaskMaster is an advanced task management dashboard designed to enhance productivity and task tracking. It features robust user authentication, including Google Sign-In, and an intuitive task management system. With a focus on ease of use, TaskMaster provides a streamlined experience for managing personal tasks, deadlines, and priorities.
+Taskflow is an advanced task management dashboard designed to enhance productivity and task tracking. It features robust user authentication, including Google Sign-In, and an intuitive task management system. With a focus on ease of use, TaskMaster provides a streamlined experience for managing personal tasks, deadlines, and priorities.
 ## Features
 
 - **General Features**  
