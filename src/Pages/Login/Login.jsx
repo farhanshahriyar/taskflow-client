@@ -1,11 +1,5 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useRef, useState } from "react";
-import loginImg from "../../../public/loginImg.avif";
-import {
-  loadCaptchaEnginge,
-  LoadCanvasTemplate,
-  validateCaptcha,
-} from "react-simple-captcha";
+import React, { useContext, useEffect, useState } from "react";
+import loginImg from "../../../public/logimg.png";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic/useAxiosPublic";
@@ -14,17 +8,11 @@ import { AuthContext } from "../../providers/AuthProvider";
 const Login = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  // const [user, setUser] = useState(null)
-  const captchaRef = useRef(null);
-  const [disabled, setDisabled] = useState(true);
   const { user, loading, createUser, signIn, googleSignIn, githubSignIn } =
-    useContext(AuthContext);
+  useContext(AuthContext);
 
-  // load captcha engine on component mount
-  useEffect(() => {
-    loadCaptchaEnginge(6);
-  }, []);
 
+  
   const handleGoogleSignIn = (e) => {
     e.preventDefault();
     googleSignIn()
@@ -88,60 +76,29 @@ const Login = () => {
       });
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // console.log('login e tip porse mama')
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    console.log(email, password, name);
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        text: "You are logged in successfully!",
-      });
-      navigate("/dashboard/projects");
-    });
-  };
 
-  // validate captcha
-  const handleValidateCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
-    if (validateCaptcha(user_captcha_value) === true) {
-      setDisabled(false);
-      console.log("captcha validated");
-    } else {
-      setDisabled(true);
-      console.log("captcha not validated");
-    }
-  };
 
   return (
     <div>
-      {/* login */}
-
-      <div className="relative overflow-hidden">
-        <div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-10 md:px-8">
-          <div className="md:pe-8 md:w-1/2 xl:pe-0 xl:w-5/12">
-            <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-3xl lg:leading-tight dark:text-gray-200">
-              <span className="text-[#153E3D] dark:text-blue-500">
+      <section class="relative flex flex-wrap lg:h-screen lg:items-center">
+        <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
+          <div class="mx-auto max-w-lg text-center">
+          <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-3xl lg:leading-tight dark:text-gray-200">
+              <span className="text-green-700 dark:text-blue-500">
                 Taskflow
               </span>{" "}
               is here to help you to manage your tasks.
             </h1>
-            <p className="mt-3 text-base text-gray-500">
+
+            <p class="mt-4 text-gray-500">
               Taskflow is a task management software that helps you to manage
               your tasks. It is a simple and easy to use software. It is a web
               based software so you can use it from anywhere.
             </p>
+          </div>
 
-            {/* <form onSubmit={handleLogin}> */}
-            <form >
-              <div className="mt-8 grid">
+          <form action="" class="mx-auto mb-0 mt-8 max-w-md space-y-4">
+          <div className="mt-8 grid">
                 <button
                   onClick={handleGoogleSignIn}
                   type="button"
@@ -175,12 +132,11 @@ const Login = () => {
                 </button>
                 <br></br>
                 <div className="py-6 flex items-center text-sm text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">
-                Or
-              </div>
-
+                  Or
+                </div>
 
                 <button
-                disabled={loading}
+                  disabled={loading}
                   onClick={hanleGithubSignIn}
                   className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-green-600 to-green-600 hover:from-green-600 hover:to-green-600 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-4 dark:focus:ring-offset-gray-800"
                   href="#"
@@ -199,84 +155,17 @@ const Login = () => {
                 </button>
               </div>
 
-              <div className="py-6 flex items-center text-sm text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">
-                Or
-              </div>
-
-             <div className="mb-4">
-                <label className="block text-sm font-medium dark:text-white">
-                  <span className="text-black ml-4">Email address</span>
-                </label>
-                <input
-                  type="email"
-                  id="hs-hero-email-2"
-                  name="email"
-                  className="py-3 px-4 block w-full border-gray-600 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="Enter your email address"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium dark:text-white">
-                  <span className="text-black ml-4">Password</span>
-                </label>
-                <input
-                  type="password"
-                  id="hs-hero-password-2"
-                  name="password"
-                  className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="Enter your password"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium dark:text-white">
-                  <span className="text-black ml-4">Captcha</span>
-                </label>
-                <LoadCanvasTemplate />
-                <input
-                  type="text"
-                  ref={captchaRef}
-                  id="hs-hero-password-2"
-                  name="captcha"
-                  className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="Enter the captcha code above"
-                />
-                <button
-                  // onClick={handleValidateCaptcha}
-                  type="button"
-                  className=" mt-2 py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-teal-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                >
-                  Validate
-                </button>
-              </div>
-
-              <div className="grid">
-                <button
-                  disabled={disabled}
-                  type="submit"
-                  className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-[#153E3D] text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                >
-                  Sign up
-                </button>
-              </div> 
-            </form>
-            <p className="mt-3 text-base text-gray-500">
-              <Link to="/sign-up">
-                Dont have an account?{" "}
-                <a className="text-[#153E3D] decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                  Sign up
-                </a>
-              </Link>
-            </p>
-          </div>
+          </form>
         </div>
 
-        <div
-          className="hidden md:block md:absolute md:top-0 md:start-1/2 md:end-0 h-full bg-no-repeat bg-center bg-cover"
-          style={{ backgroundImage: `url(${loginImg})` }}
-        ></div>
-      </div>
+        <div class="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
+          <img
+            alt="Welcome"
+            src={loginImg}
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+        </div>
+      </section>
     </div>
   );
 };
