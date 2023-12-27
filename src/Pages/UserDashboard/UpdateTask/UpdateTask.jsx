@@ -39,7 +39,7 @@ const UpdateTask = () => {
     };
 
     try {
-      const response = await axios.put(`http://localhost:5000/tasks/${id}`, updatedTask);
+      const response = await axios.put(`https://taskflow-server.vercel.app/tasks/${id}`, updatedTask);
       if (response.data.modifiedCount > 0) {
         Swal.fire('Success!', 'Task updated successfully', 'success');
         navigate('/dashboard/projects');

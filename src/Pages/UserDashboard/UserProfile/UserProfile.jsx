@@ -14,7 +14,7 @@ const UserProfile = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users?email=${user.email}`
+          `https://taskflow-server.vercel.app/users?email=${user.email}`
         );
         setProfile(response.data);
       } catch (error) {

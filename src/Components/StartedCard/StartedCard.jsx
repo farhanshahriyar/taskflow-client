@@ -22,7 +22,7 @@ const StartedCard = ({
 
 
   const handleStartTask = (id) => {
-    fetch(`http://localhost:5000/tasks/${id}/start`, {
+    fetch(`https://taskflow-server.vercel.app/tasks/${id}/start`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const StartedCard = ({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/tasks/${id}`, {
+        fetch(`https://taskflow-server.vercel.app/tasks/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

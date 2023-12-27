@@ -108,7 +108,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/tasks/${params.id}`).then(
+          fetch(`https://taskflow-server.vercel.app/tasks/${params.id}`).then(
             (res) => res.json()
           ),
       },

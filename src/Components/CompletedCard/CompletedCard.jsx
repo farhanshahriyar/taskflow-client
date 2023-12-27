@@ -16,7 +16,7 @@ const CompletedCard = ({ task, setRefetech }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/tasks/${id}`, {
+        fetch(`https://taskflow-server.vercel.app/tasks/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

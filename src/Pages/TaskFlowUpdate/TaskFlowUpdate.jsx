@@ -69,9 +69,6 @@ const TaskFlowUpdate = () => {
                 - Add Task <br/>
                 - Update Task <br/>
                 - Delete Task <br/>
-                - Add Project <br/>
-                - Update Project <br/>
-                - Delete Project <br/>
             </p>
             <button
               type="button"

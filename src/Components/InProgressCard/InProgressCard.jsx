@@ -11,7 +11,7 @@ const InProgressCard = ({
   setRefetech,
 }) => {
   const handleInProgressTask = (id) => {
-    fetch(`http://localhost:5000/tasks/${id}/complete`, {
+    fetch(`https://taskflow-server.vercel.app/tasks/${id}/complete`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

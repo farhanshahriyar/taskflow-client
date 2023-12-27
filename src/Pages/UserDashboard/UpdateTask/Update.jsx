@@ -40,7 +40,7 @@ const Update = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+      const response = await fetch(`https://taskflow-server.vercel.app/tasks/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

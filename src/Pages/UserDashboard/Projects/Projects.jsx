@@ -16,7 +16,7 @@ const Projects = () => {
       return;
     }
 
-    fetch(`http://localhost:5000/tasks?email=${user?.email}`)
+    fetch(`https://taskflow-server.vercel.app/tasks?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched tasks:", data); // Add this line to see what you're getting

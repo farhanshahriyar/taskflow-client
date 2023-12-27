@@ -70,7 +70,7 @@ const Tasks = () => {
   
     // Submit the task data to the server
     try {
-      const response = await axios.post("http://localhost:5000/tasks", finalTaskData);
+      const response = await axios.post("https://taskflow-server.vercel.app/tasks", finalTaskData);
       console.log(response);
       Swal.fire({
         title: "Success!",
