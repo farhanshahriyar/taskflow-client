@@ -67,7 +67,7 @@ const Projects = () => {
           <div>
             <h2 className="text-lg font-bold mb-4 text-gray-700">Started</h2>
             {/* Map through started tasks and render them */}
-            {startedTasks.map((task) => (
+            {startedTasks.reverse().map((task) => (
               <StartedCard key={task._id} {...task} setRefetech={setRefetech} />
             ))}
           </div>
@@ -77,7 +77,7 @@ const Projects = () => {
             <h2 className="text-lg font-bold mb-4 text-gray-700">InProgress</h2>
             {/* Map through inProgress tasks and render them */}
             {
-              inProgressTasks.map((task) => (
+              inProgressTasks.reverse().map((task) => (
                 <InProgressCard key={task._id} {...task} setRefetech={setRefetech} />
                 
               ))
@@ -89,7 +89,7 @@ const Projects = () => {
             <h2 className="text-lg font-bold mb-4 text-gray-700">Completed</h2>
             {/* Map through completed tasks and render them */}
             {
-              completedTasks.map((task) => (
+              completedTasks.reverse().map((task) => (
                 <CompletedCard key={task._id} task={task} setRefetech={setRefetech} />
               ))
             }

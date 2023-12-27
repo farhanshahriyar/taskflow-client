@@ -33,6 +33,7 @@ const Login = () => {
         const userInfo = {
           email: result.user?.email,
           name: result.user?.displayName,
+          role: "free-user",
         };
         axiosPublic.post("/users", userInfo).then((res) => {
           console.log(res.data); // user created

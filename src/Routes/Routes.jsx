@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/software-update-news",
+        path: "/dashboard/software-update-logs",
         element: (
           <ProtectedRoute>
             <TaskFlowUpdate/>

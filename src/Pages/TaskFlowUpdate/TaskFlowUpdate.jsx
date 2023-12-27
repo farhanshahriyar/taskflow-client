@@ -90,7 +90,7 @@ const TaskFlowUpdate = () => {
         <div className="flex gap-x-3">
           <div className="w-16 text-end">
             <span className="text-xs text-gray-500 dark:text-gray-400">
-                3:00PM  27/12/2023
+                7:00PM  27/12/2023
             </span>
           </div>
 
