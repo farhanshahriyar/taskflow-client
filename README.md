@@ -28,10 +28,14 @@ Taskflow is an advanced task management dashboard designed to enhance productivi
 - **Animations:**
     - Smooth user experience powered by Framer Motion.
 
-## Demo
+## Demo Project View
 
 - [@taskflowmanager](https://taskflowmanager.netlify.app/)
 
+## Overview of Taskflowmanager Dashboard
+![Web-app Dashboard](https://utfs.io/f/d6bb3dcc-4cd2-45b9-8b29-ac442bd4af64-gt1gv5.png)
+![Web-app TaskPage](https://utfs.io/f/a7d5fb28-34e9-4547-82e2-6309564918a6-vk7446.jpg)
+![Web-app Notification](https://utfs.io/f/a7f8fce9-6896-4580-b84a-8df30220cf9b-4i3ti3.png)
 
 ## Authors
 
