@@ -4,7 +4,9 @@ Taskflow is an advanced task management dashboard designed to enhance productivi
 ## Features
 
 - **General Features**  
--**User Authentication:** Secure login, registration, and logout functionalities.
+  **User Authentication:** 
+  - Secure login, registration, and logout functionalities.
+  - Alternative login option using Google accounts.
 
 -**Google Sign-In:** Alternative login option using Google accounts.
 
