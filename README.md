@@ -3,30 +3,101 @@
 Taskflow is an advanced task management dashboard designed to enhance productivity and task tracking. It features robust user authentication, including Google Sign-In, and an intuitive task management system. With a focus on ease of use, TaskMaster provides a streamlined experience for managing personal tasks, deadlines, and priorities.
 ## Features
 
+## Overview
+This repository contains the front-end implementation for **TaskFlow**, a web application designed for efficient task and project management. TaskFlow helps users organize tasks, manage projects, and collaborate effectively through user-friendly dashboards and integrated tools.
 
 ## Features
+### General Features
+- User-friendly interface for managing tasks, projects, and jobs.
+- Secure authentication system using Firebase.
+- Responsive design with TailwindCSS.
 
-**General Features**  
-- **User Authentication:**
-    - Secure login, registration, and logout functionalities.
-    - Alternative login option using Google accounts or Github accounts.
+### User Capabilities
+#### Task Management:
+- Create, update, and categorize tasks (e.g., Started, In Progress, Completed).
+- Drag-and-drop functionality for task organization.
 
-- **Profile Management:**
-    - Personalized user profiles with profile pictures.
-    
-- **Task Management:**
-    - Create tasks with titles, descriptions, deadlines, and set priorities.
-    - Edit and save task details with ease.
+#### Project Management:
+- Track project progress and manage associated tasks.
+- Access project details in a personalized dashboard.
 
-- **Task Lists:**
-    - Organize tasks into 'To-Do', 'Ongoing', and 'Completed' lists.
-    - Drag-and-drop functionality for easily moving tasks between lists (***under construction***).
+#### Collaboration:
+- Message system for team communication.
+- Client testimonials and relationship management.
 
-- **Notifications:**
-    - Toast notifications for task assignments, updates, and deadlines.
+#### Dashboard:
+- Overview of tasks, projects, and messages.
+- Personalize profile settings and manage account details.
 
-- **Animations:**
-    - Smooth user experience powered by Framer Motion.
+### Additional Features:
+- Calendar integration for task scheduling.
+- Error handling with a dedicated error page.
+- Loading spinner for smoother user experience.
+
+---
+
+## Project Structure
+```plaintext
+farhanshahriyar-taskflow-client/
+├── index.html
+├── public/
+│   ├── loginImg.avif          # Static login image
+│   └── _redirects             # Redirect configuration for deployment
+├── postcss.config.js          # PostCSS configuration
+├── package.json               # Project dependencies
+├── vite.config.js             # Vite configuration
+├── README.md                  # Project documentation
+├── tailwind.config.js         # TailwindCSS configuration
+├── src/
+│   ├── App.jsx                # Main application component
+│   ├── Components/            # Reusable UI components
+│   ├── providers/             # Context providers for authentication
+│   ├── firebase/              # Firebase configuration
+│   ├── hooks/                 # Custom React hooks
+│   ├── Routes/                # Application routes and protected route logic
+│   ├── Pages/                 # All application pages (Dashboard, Tasks, Login, etc.)
+│   ├── App.css                # Application-wide CSS
+│   ├── Layouts/               # Main layout structure
+│   └── utils/                 # Utility functions
+```
+
+---
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-username>/farhanshahriyar-taskflow-client.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd farhanshahriyar-taskflow-client
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## Tech Stack
+- **Framework:** React with Vite
+- **Styling:** TailwindCSS
+- **State Management:** Context API
+- **Authentication:** Firebase
+
+---
+
+## Key Files
+- **`src/firebase/firebase.config.js`:** Firebase authentication setup.
+- **`src/hooks/`:** Custom hooks for API integration and role-based logic.
+- **`src/Pages/`:** Page components organized by roles and functionality.
+
+---
+
 
 ## Diagram of Taskflow
 ![Diagram](https://utfs.io/f/16574aa9-c1f7-47a5-8bd4-733eea3ad11c-nys99p.png)
