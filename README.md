@@ -70,7 +70,7 @@ farhanshahriyar-taskflow-client/
    ```
 2. Navigate to the project directory:
    ```bash
-   cd farhanshahriyar-taskflow-client
+   cd taskflow-client
    ```
 3. Install dependencies:
    ```bash
