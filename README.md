@@ -66,7 +66,7 @@ farhanshahriyar-taskflow-client/
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/farhanshahriyar-taskflow-client.git
+   git clone https://github.com/farhanshahriyar/taskflow-client.git
    ```
 2. Navigate to the project directory:
    ```bash
